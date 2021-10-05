@@ -68,12 +68,6 @@ async def hello(ctx):
     print(f'[Logs:utils] Приветствие было выведено | {PREFIX}hello')
 
 @bot.command()
-async def link(ctx):
-    author = ctx.message.author
-    await ctx.send(f"{author.mention},  https://discord.gg/uUZbxgEByu")
-    print(f'[Logs:utils] Ссылка была выведена | {PREFIX}link')
-
-@bot.command()
 async def ver(ctx):
     await ctx.send(f"{version} | Сделано CreeperXP#0363")
     print(f'[Logs:utils] Информация о боте была выведена | {PREFIX}ver')
