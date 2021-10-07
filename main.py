@@ -99,7 +99,6 @@ async def serverinfo(ctx):
 	= f"{ctx.guild.name}", inline = False)
 	serverinfoEmbed.add_field(name = "Кол-во юзеров", value = f"{ctx.guild.member_count}", inline = False)
 	serverinfoEmbed.add_field(name = "Уровень безопасности", value = f"{ctx.guild.verification_level}", inline = False)
-	#serverinfoEmbed.add_field(name = "Высшая роль", value = f"{ctx.guild.roles}", inline = False)
 	serverinfoEmbed.add_field(name = "Кол-во ролей", value = f"{role_count}", inline = False)
 	serverinfoEmbed.add_field(name = "ID сервера", value = f"{ctx.guild.id}", inline = False)
 	
