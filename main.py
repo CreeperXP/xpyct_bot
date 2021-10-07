@@ -156,26 +156,5 @@ async def send_m(ctx, member: nextcord.Member, *, text):
   await member.send(f'От {ctx.author.name}:', embed = nextcord.Embed(description = text))
   print(f'[Logs:utils] Сообщение от {ctx.author.name} было отправлено {member.name} | {PREFIX}send_m')
 
-@bot.command()
-@commands.has_permissions(administrator=True)
-async def load(ctx, extensions):
-    bot.load_extension(f'cogs.{extension}')
-
-
-@bot.command()
-@commands.has_permissions(administrator=True)
-async def unload(ctx, extensions):
-    bot.unload_extension(f'cogs.{extensions}')
-
-@bot.command()
-@commands.has_permissions(administrator=True)
-async def reload(ctx, extensions):
-    bot.unload_extension(f'cogs.{extensions}')
-    bot.load_extension(f'cogs.{extensions}')
-
-'''for filename in os.listdir('cogs'):
-    if filename.endswith('.py'):
-        bot.load_extension(f'cogs.{filename[:-3]}')'''
-
 keep_alive()
 bot.run(os.getenv("DISCORD_TOKEN"))
