@@ -22,11 +22,9 @@ async def on_ready():
     await bot.change_presence(status=nextcord.Status.online, activity=nextcord.Game('$help'))
 
 @bot.event
-async def on_member_join(member):
-    guild = member.guild
-    if guild.system_channel is not None:
-        msg = f"Приветствуем тебя, {member.mention} на сервере {guild.name}!"
-        await guild.system_channel.send(msg)
+async def on_message(message):
+    if 'мут' in message.content.lower():
+        await channel.send(file=discord.File('leopold.png'))
 
 @bot.command()
 async def help(ctx):
@@ -154,11 +152,6 @@ async def send_m(ctx, member: nextcord.Member, *, text):
   await ctx.message.delete()
   await member.send(f'От {ctx.author.name}:', embed = nextcord.Embed(description = text))
   print(f'[Logs:utils] Сообщение от {ctx.author.name} было отправлено {member.name} | {PREFIX}send_m')
-
-@bot.command()
-async def restartBot(ctx):
-    await ctx.bot.logout()
-    await login("DISCORD_TOKEN", bot=True)
 
 keep_alive()
 bot.run(os.getenv("DISCORD_TOKEN"))
