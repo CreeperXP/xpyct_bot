@@ -80,7 +80,7 @@ async def clear(ctx, amount=5):
 @bot.command()
 async def say(ctx, *, text):
   await ctx.message.delete()
-  await ctx.send(embed = discord.Embed(description = text))
+  await ctx.send(embed = nextcord.Embed(description = text))
   print(f'[Logs:utils] Сообщение пересказано ботом {PREFIX}say')
 
 @bot.command()
