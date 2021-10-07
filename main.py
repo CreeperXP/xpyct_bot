@@ -155,5 +155,10 @@ async def send_m(ctx, member: nextcord.Member, *, text):
   await member.send(f'От {ctx.author.name}:', embed = nextcord.Embed(description = text))
   print(f'[Logs:utils] Сообщение от {ctx.author.name} было отправлено {member.name} | {PREFIX}send_m')
 
+@bot.command()
+async def restartBot(ctx):
+    await ctx.bot.logout()
+    await login("DISCORD_TOKEN", bot=True)
+
 keep_alive()
 bot.run(os.getenv("DISCORD_TOKEN"))
