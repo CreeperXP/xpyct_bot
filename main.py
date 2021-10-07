@@ -24,7 +24,7 @@ async def on_ready():
 @bot.event
 async def on_message(message):
     if 'мут' in message.content.lower():
-        await channel.send(file=discord.File('leopold.png'))
+        await message.channel.send(file=discord.File('leopold.png'))
 
 @bot.command()
 async def help(ctx):
