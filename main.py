@@ -21,11 +21,6 @@ async def on_ready():
     print(f"Текущее время: {ctime}")
     await bot.change_presence(status=nextcord.Status.online, activity=nextcord.Game('$help'))
 
-@bot.event
-async def on_message(message):
-    if 'мут' in message.content.lower():
-        await message.channel.send(file=discord.File('leopold.png'))
-
 @bot.command()
 async def help(ctx):
     await ctx.send(f"Мои команды: {PREFIX}help | {PREFIX}ping | {PREFIX}clear | {PREFIX}hello | {PREFIX}github | {PREFIX}ver | {PREFIX}say | {PREFIX}serverinfo | {PREFIX}clean | {PREFIX}send_m")
@@ -153,5 +148,9 @@ async def send_m(ctx, member: nextcord.Member, *, text):
   await member.send(f'От {ctx.author.name}:', embed = nextcord.Embed(description = text))
   print(f'[Logs:utils] Сообщение от {ctx.author.name} было отправлено {member.name} | {PREFIX}send_m')
 
+@bot.command()
+async def mute(ctx):
+  await ctx.send(file=nextcord.File('leopold-vd.mp4'))
+
 keep_alive()
-bot.run(os.getenv("DISCORD_TOKEN"))
+bot.run(os.getenv(""))
