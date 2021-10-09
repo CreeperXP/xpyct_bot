@@ -1,4 +1,4 @@
-<u>**CreeperBot**<u> 
+<u>**XpyctBot**<u> 
 
 ![Discord](https://img.shields.io/discord/893897417659920384?label=Discord&logo=Discord) ![Website](https://img.shields.io/website?down_message=offline&label=Bot%20status&logo=Replit&up_message=online&url=https%3A%2F%2Fcreeperbot.dima47452.repl.co) ![GitHub last commit](https://img.shields.io/github/last-commit/CreeperXP/creeper_bot?logo=GitHub)
 

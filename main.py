@@ -153,4 +153,4 @@ async def mute(ctx):
   await ctx.send(file=nextcord.File('leopold-vd.mp4'))
 
 keep_alive()
-bot.run("ODMzNzIwOTc1MDY5MjgyMzQ0.YH2dKg.xyXVBnMFVJfP7PC8L0R-woKwTbgга")
+bot.run("DISCORD_TOKEN")
