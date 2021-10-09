@@ -10,7 +10,7 @@ PREFIX = ("$")
 bot = commands.Bot(command_prefix=PREFIX, description='Hi')
 bot.remove_command('help')
 
-version = "Bot v1.3"
+version = "Bot v1.4"
 
 offset = datetime.timezone(datetime.timedelta(hours=3))
 ctime = datetime.datetime.now(offset)
@@ -102,8 +102,8 @@ async def userinfo(ctx, user: nextcord.User):
     user_id = user.id
     username = user.name
     avatar = user.avatar.url
-    await ctx.send(f'User found: {user_id} -- {username}\n{avatar}')
-
+    await ctx.send(f'ID: {user_id} | NICK: {username}\n{avatar}')
+    print(f'[Logs:utils] Информация о {username} была выведена | {PREFIX}userinfo')
 
 @bot.command()
 async def clean(ctx, amount=None):
@@ -153,4 +153,4 @@ async def mute(ctx):
   await ctx.send(file=nextcord.File('leopold-vd.mp4'))
 
 keep_alive()
-bot.run("DISCORD_TOKEN")
+bot.run(os.getenv("DISCORD_TOKEN"))
