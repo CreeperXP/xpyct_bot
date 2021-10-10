@@ -2,7 +2,7 @@ from webserver import keep_alive
 import os
 import nextcord
 from nextcord.ext import commands
-import datetime
+import time
 import json
 import requests
 
@@ -11,14 +11,12 @@ bot = commands.Bot(command_prefix=PREFIX, description='Hi')
 bot.remove_command('help')
 
 version = "Bot v1.4"
-
-offset = datetime.timezone(datetime.timedelta(hours=3))
-ctime = datetime.datetime.now(offset)
+ctime = time.strftime("Today is %X %x", time.localtime())
 
 @bot.event
 async def on_ready():
     print(f"Bot logged as {bot.user} | {version}")
-    print(f"Текущее время: {ctime}")
+    print(f"{ctime}")
     await bot.change_presence(status=nextcord.Status.online, activity=nextcord.Game('$help'))
 
 @bot.command()
