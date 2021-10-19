@@ -5,8 +5,11 @@ from nextcord.ext import commands
 import time
 import json
 import requests
+import random
+import asyncio
 
-PREFIX = "$"
+
+PREFIX = "."
 bot = commands.Bot(command_prefix=PREFIX, description="Hi")
 bot.remove_command("help")
 
@@ -220,24 +223,24 @@ async def mute(ctx):
 @bot.command() ## Стандартное объявление комманды
 async def load(ctx, extensions): ## объявление функции
     bot.load_extension(f'cogs.{extensions}') ## загрузка доплонений
-        await ctx.send("loaded")
+    await ctx.send("loaded")
 
 
 @bot.command()
 async def unload(ctx, extensions):
     bot.unload_extension(f"cogs.{extensions}")
-        await ctx.send('unloaded')
+    await ctx.send('unloaded')
 
 @bot.command()
 async def reload(ctx, extensions):
     bot.unload_extension(f"cogs.{extensions}")# отгружаем ког
     bot.load_extension(f"cogs.{extensions}")# загружаем
-        await ctx.send('reloaded')
+    await ctx.send('reloaded')
 
 
-for filename in os.listdir("./cogs"): # Цикл перебирающий файлы в cogs
-if filename.endswith(".py"): # если файл кончается на .py, то это наш ког
-bot.load_extension(f"cogs.{filename[:-3]}") #Командуем боту загрузить все расширения. Это нужно для того, чтобы вы перезапуская бота не писали команды загрузки. При наличии этого цикла бот стартует сразу с полной загрузкой когов
+for filename in os.listdir("./cogs"):
+  if filename.endswith(".py"):
+    bot.load_extension(f"cogs.{filename[:-3]}")
 
 
 keep_alive()
