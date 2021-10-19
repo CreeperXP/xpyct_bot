@@ -10,7 +10,7 @@ PREFIX = "$"
 bot = commands.Bot(command_prefix=PREFIX, description="Hi")
 bot.remove_command("help")
 
-version = "Bot v1.4"
+version = "Bot v1.6"
 ctime = time.strftime("Today is %X %x", time.localtime())
 
 
@@ -105,8 +105,15 @@ async def clear(ctx, amount=5):
 @bot.command()
 async def say(ctx, *, text):
     await ctx.message.delete()
-    await ctx.send(embed=nextcord.Embed(description=text))
-    print(f"[Logs:utils] Сообщение пересказано ботом | {PREFIX}say")
+    author = ctx.message.author
+    username = author.name
+    develop = "CreeperXP"
+    if username == develop:
+      await ctx.message.delete()
+      await ctx.send(embed=nextcord.Embed(description=text))
+      print(f"[Logs:utils] Сообщение пересказано ботом | {PREFIX}say")
+    else:
+      await ctx.send("Ты не разработчик бота!")
 
 
 @bot.command()
@@ -161,7 +168,7 @@ class Confirm(nextcord.ui.View):
         self, button: nextcord.ui.Button, interaction: nextcord.Interaction
     ):
         await interaction.response.send_message(
-            "https://github.com/CreeperXP/creeper_bot", ephemeral=True
+            "https://github.com/CreeperXP/xpyct_bot", ephemeral=True
         )
         self.value = True
         self.stop()
@@ -188,21 +195,49 @@ async def github(ctx):
         print("Ссылка выведена")
     if view.value == False:
         print("Ссылка не выведена")
-        print(f"[Logs:utils] Ссылка на GitHub была выведена | {PREFIX}github")
+    print(f"[Logs:utils] Ссылка на GitHub была выведена | {PREFIX}github")
 
 
 @bot.command()
 async def send_m(ctx, member: nextcord.Member, *, text):
     await ctx.message.delete()
-    await member.send(f"От {ctx.author.name}:", embed=nextcord.Embed(description=text))
-    print(
-        f"[Logs:utils] Сообщение от {ctx.author.name} было отправлено {member.name} | {PREFIX}send_m"
-    )
+    author = ctx.message.author
+    user_name = author.name
+    develop = "CreeperXP"
+    if user_name == develop:
+      await member.send(f"От {ctx.author.name}:", embed=nextcord.Embed(description=text))
+      print(f"[Logs:utils] Сообщение от {ctx.author.name} было отправлено {member.name} | {PREFIX}send_m")
+    else:
+      await ctx.send("Ты не разработчик бота!")
+      time.sleep(7)
+      await ctx.message.delete()
 
 
 @bot.command()
 async def mute(ctx):
     await ctx.send(file=nextcord.File("leopold-vd.mp4"))
+
+@bot.command() ## Стандартное объявление комманды
+async def load(ctx, extensions): ## объявление функции
+    bot.load_extension(f'cogs.{extensions}') ## загрузка доплонений
+        await ctx.send("loaded")
+
+
+@bot.command()
+async def unload(ctx, extensions):
+    bot.unload_extension(f"cogs.{extensions}")
+        await ctx.send('unloaded')
+
+@bot.command()
+async def reload(ctx, extensions):
+    bot.unload_extension(f"cogs.{extensions}")# отгружаем ког
+    bot.load_extension(f"cogs.{extensions}")# загружаем
+        await ctx.send('reloaded')
+
+
+for filename in os.listdir("./cogs"): # Цикл перебирающий файлы в cogs
+if filename.endswith(".py"): # если файл кончается на .py, то это наш ког
+bot.load_extension(f"cogs.{filename[:-3]}") #Командуем боту загрузить все расширения. Это нужно для того, чтобы вы перезапуская бота не писали команды загрузки. При наличии этого цикла бот стартует сразу с полной загрузкой когов
 
 
 keep_alive()
