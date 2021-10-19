@@ -9,7 +9,7 @@ import random
 import asyncio
 
 
-PREFIX = "."
+PREFIX = "$"
 bot = commands.Bot(command_prefix=PREFIX, description="Hi")
 bot.remove_command("help")
 
