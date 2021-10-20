@@ -7,6 +7,7 @@ import json
 import requests
 import random
 import asyncio
+from urllib.parse import quote_plus
 
 PREFIX = "$"
 bot = commands.Bot(command_prefix=PREFIX, description="Hi")
@@ -114,7 +115,6 @@ async def say(ctx, *, text):
 		print(f"[Logs:utils] Сообщение пересказано ботом | {PREFIX}say")
 	else:
 		await ctx.send("Ты не разработчик бота!")
-
 
 @bot.command()
 async def time(ctx):
@@ -224,6 +224,32 @@ async def send_m(ctx, member: nextcord.Member, *, text):
 @bot.command()
 async def mute(ctx):
 	await ctx.send(file=nextcord.File("leopold-vd.mp4"))
+
+
+class Google(nextcord.ui.View):
+    def __init__(self, query: str):
+        super().__init__()
+        query = quote_plus(query)
+        url = f'https://www.google.com/search?q={query}'
+        self.add_item(nextcord.ui.Button(label='Google', url=url))
+
+
+class Yandex(nextcord.ui.View):
+    def __init__(self, query: str):
+        super().__init__()
+        query = quote_plus(query)
+        url = f'https://yandex.ua/search/?text={query}'
+        self.add_item(nextcord.ui.Button(label='Яндекс', url=url))
+
+
+@bot.command(aliases = ["поиск", "гугл"])
+async def google(ctx, *, query: str):
+    await ctx.reply(f'Результаты запроса `{query}`', view=Google(query))
+
+
+@bot.command(aliases = ['яндекс', "yndx"])
+async def yandex(ctx, *, query: str):
+    await ctx.reply(f'Результаты запроса `{query}`', view=Yandex(query))
 
 
 @bot.command()  ## Стандартное объявление комманды

@@ -12,11 +12,12 @@ class guessing_game(commands.Cog):
     async def on_command_error(self, ctx, error):
       if isinstance(error, commands.CommandOnCooldown):
           await ctx.send(f'Для использования команды повторно жди {round(error.retry_after, 2)} секунд')
+        
 
     @commands.command(aliases = ['guess', 'номера', 'угадайка'])
-    @commands.cooldown(1, 15, commands.BucketType.user)
+    @commands.cooldown(1, 10, commands.BucketType.user)
     async def guessing_game(self, ctx):
-        await ctx.send('Введи число от 1 до 10')
+        await ctx.send('Введи число от 1 до 10.')
 
         def is_correct(m):
          return m.author == ctx.author and m.content.isdigit()
