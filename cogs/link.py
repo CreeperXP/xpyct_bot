@@ -8,15 +8,15 @@ class Link(commands.Cog):
         self.bot = bot
 
 
-        class Google(nextcord.ui.View):
-            def __init__(self, query: str):
-                super().__init__()
-                query = quote_plus(query)
-                url = f'https://www.google.com/search?q={query}'
-                self.add_item(nextcord.ui.Button(label='Click Here', url=url))
+    class Google(nextcord.ui.View):
+        def __init__(self, query: str):
+            super().__init__()
+            query = quote_plus(query)
+            url = f'https://www.google.com/search?q={query}'
+            self.add_item(nextcord.ui.Button(label='Click Here', url=url))
 
 
-    @commands.command(alias = "link",)
+    @commands.command(alias = ["link", "google", "гугл", "поиск"])
     @commands.cooldown(1, 15, commands.BucketType.member)
     async def google(ctx, *, query: str):
         await ctx.send(f'Google Result for: `{query}`', view=Google(query))
