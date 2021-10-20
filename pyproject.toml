@@ -7,7 +7,7 @@ authors = ["dima47452 <<>>"]
 [tool.poetry.dependencies]
 python = "^3.8"
 Flask = "^2.0.2"
-nextcord = "^2.0.0-alpha.3"
+youtube_dl = "^2021.6.6"
 
 [tool.poetry.dev-dependencies]
 

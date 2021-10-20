@@ -8,12 +8,14 @@ import requests
 import random
 import asyncio
 from urllib.parse import quote_plus
+import youtube_dl
+
 
 PREFIX = "$"
 bot = commands.Bot(command_prefix=PREFIX, description="Hi")
 bot.remove_command("help")
 
-version = "Bot v1.6"
+version = "Bot v2.0"
 ctime = time.strftime("Today is %X %x", time.localtime())
 
 
@@ -27,7 +29,7 @@ async def on_ready():
 @bot.command()
 async def help(ctx):
 	await ctx.send(
-	    f"Мои команды: {PREFIX}help | {PREFIX}ping | {PREFIX}clear | {PREFIX}hello | {PREFIX}github | {PREFIX}ver | {PREFIX}say | {PREFIX}serverinfo | {PREFIX}clean | {PREFIX}send_m"
+	    f"**My commands**: {PREFIX}help | {PREFIX}ping | {PREFIX}clear | {PREFIX}hello | {PREFIX}github | {PREFIX}ver | {PREFIX}say | {PREFIX}serverinfo | {PREFIX}clean | {PREFIX}send_m | **Games**: $guess, $headortails | **Music**: $play, $join, $leave"
 	)
 	print(
 	    f"[Logs:utils] Информация о командах бота была выведена | {PREFIX}help"
@@ -250,6 +252,10 @@ async def google(ctx, *, query: str):
 @bot.command(aliases = ['яндекс', "yndx"])
 async def yandex(ctx, *, query: str):
     await ctx.reply(f'Результаты запроса `{query}`', view=Yandex(query))
+
+#MUSIC
+
+#MUSIC END
 
 
 @bot.command()  ## Стандартное объявление комманды
