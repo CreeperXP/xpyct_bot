@@ -1,6 +1,6 @@
 ### XpyctBot 
 
-![Discord](https://img.shields.io/discord/820223886843052053?label=Discord&logo=Discord) ![Website](https://img.shields.io/website?down_message=offline&label=Bot%20status&logo=Replit&up_message=online&url=https%3A%2F%2Fcreeperbot.dima47452.repl.co) ![GitHub last commit](https://img.shields.io/github/last-commit/CreeperXP/creeper_bot?logo=GitHub)
+![Discord](https://img.shields.io/discord/820223886843052053?label=Discord&logo=Discord) ![Website](https://img.shields.io/website?down_message=offline&label=Bot%20status&logo=Replit&up_message=online&url=https%3A%2F%2Fcreeper_bot.dima47452.repl.co) ![GitHub last commit](https://img.shields.io/github/last-commit/CreeperXP/creeper_bot?logo=GitHub)
 
 This bot is based on [Nextcord](https://github.com/nextcord/nextcord "Nextcord") and uses Python as the main language.
 
