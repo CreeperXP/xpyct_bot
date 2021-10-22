@@ -2,7 +2,6 @@ from webserver import keep_alive
 import os
 import nextcord
 from nextcord.ext import commands
-import time
 import json
 import requests
 import random
@@ -15,14 +14,12 @@ PREFIX = "$"
 bot = commands.Bot(command_prefix=PREFIX, description="Hi")
 bot.remove_command("help")
 
-version = "Bot v2.0"
-ctime = time.strftime("Today is %X %x", time.localtime())
 
+version = "Bot v2.1"
 
 @bot.event
 async def on_ready():
 	print(f"Bot logged as {bot.user} | {version}")
-	print(f"{ctime}")
 	await bot.change_presence(status=nextcord.Status.online,activity=nextcord.Game("$help"))
 
 
@@ -100,12 +97,6 @@ async def ver(ctx):
 
 
 @bot.command()
-async def clear(ctx, amount=5):
-	await ctx.channel.purge(limit=amount + 1)
-	print(f"[Logs:utils] {amount} сообщений удалено| {PREFIX}purge")
-
-
-@bot.command()
 async def say(ctx, *, text):
 	await ctx.message.delete()
 	author = ctx.message.author
@@ -162,9 +153,9 @@ async def userinfo(ctx, user: nextcord.User):
 	)
 
 
-@bot.command()
+@bot.command(aliases = ['clear', 'purge'])
 async def clean(ctx, amount=None):
-	await ctx.channel.purge(limit=int(amount))
+	await ctx.channel.purge(limit=int(amount) + 1)
 	print(f"[Logs:utils] {amount} сообщений удалено | {PREFIX}clean")
 
 
@@ -253,9 +244,8 @@ async def google(ctx, *, query: str):
 async def yandex(ctx, *, query: str):
     await ctx.reply(f'Результаты запроса `{query}`', view=Yandex(query))
 
-#MUSIC
 
-#MUSIC END
+#COGS
 
 
 @bot.command()  ## Стандартное объявление комманды
