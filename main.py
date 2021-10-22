@@ -8,6 +8,10 @@ import random
 import asyncio
 from urllib.parse import quote_plus
 import youtube_dl
+from dotenv import load_dotenv
+
+
+load_dotenv()
 
 
 PREFIX = "$"
