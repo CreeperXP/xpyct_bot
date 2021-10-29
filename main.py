@@ -118,7 +118,7 @@ async def say(ctx, *, text):
     else:
         await ctx.send("Ты не разработчик бота!")
 
-
+"""
 @bot.command()
 async def serverinfo(ctx):
     role_count = len(ctx.guild.roles)
@@ -138,7 +138,7 @@ async def serverinfo(ctx):
     serverinfoEmbed.add_field(name="ID сервера", value=f"{ctx.guild.id}", inline=False)
 
     await ctx.send(embed=serverinfoEmbed)
-
+"""
 
 @bot.command()
 async def userinfo(ctx, user: nextcord.User):
