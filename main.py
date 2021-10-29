@@ -1,5 +1,10 @@
 from webserver import keep_alive
 import os
+try:
+  import nextcord
+except ImportError:
+  print("Trying to Install required module: nextcord[voice]\n")
+  os.system('python -m pip install nextcord[voice]')
 import nextcord
 from nextcord.ext import commands
 import json
@@ -8,18 +13,14 @@ import random
 import asyncio
 from urllib.parse import quote_plus
 import youtube_dl
-from dotenv import load_dotenv
-
-
-load_dotenv()
-
+from speedtest import Speedtest
 
 PREFIX = "$"
 bot = commands.Bot(command_prefix=PREFIX, description="Hi")
 bot.remove_command("help")
 
 
-version = "Bot v2.1"
+version = "Bot v2.2"
 
 @bot.event
 async def on_ready():
@@ -113,11 +114,6 @@ async def say(ctx, *, text):
 	else:
 		await ctx.send("Ты не разработчик бота!")
 
-@bot.command()
-async def time(ctx):
-	await ctx.send(f"{ctime}")
-	print(f"[Logs:utils] Время было выведено: {ctime} | {PREFIX}time")
-
 
 @bot.command()
 async def serverinfo(ctx):
@@ -205,7 +201,7 @@ async def send_m(ctx, member: nextcord.Member, *, text):
 	await ctx.message.delete()
 	author = ctx.message.author
 	user_name = author.name
-	develop = "CreeperXP"
+	develop = ["CreeperXP", "Dmitry Medvedev"]
 	if user_name == develop:
 		await member.send(f"От {ctx.author.name}:",
 		                  embed=nextcord.Embed(description=text))
@@ -214,7 +210,6 @@ async def send_m(ctx, member: nextcord.Member, *, text):
 		)
 	else:
 		await ctx.send("Ты не разработчик бота!")
-		time.sleep(7)
 		await ctx.message.delete()
 
 
@@ -247,6 +242,17 @@ async def google(ctx, *, query: str):
 @bot.command(aliases = ['яндекс', "yndx"])
 async def yandex(ctx, *, query: str):
     await ctx.reply(f'Результаты запроса `{query}`', view=Yandex(query))
+
+st = Speedtest()
+dl_speed = int(st.download() / 8000)
+up_speed = int(st.upload() / 8000)
+ethernet_speed = (f"Скорость закачки: {dl_speed} kb/s \n"
+f"Скорость выгрузки: {up_speed} kb/s")
+
+
+@bot.command(aliases = ["esp"])
+async def ethspeed(ctx):
+  await ctx.send(ethernet_speed)
 
 
 #COGS
