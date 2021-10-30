@@ -1,0 +1,44 @@
+import nextcord
+from nextcord.ext import commands
+
+
+class muteandban(commands.Cog):
+    def __init__(self, bot):
+        self.bot = bot
+      
+
+    @commands.command()
+    @commands.has_permissions(administrator=True)
+    async def mute(self, ctx, member: nextcord.Member, *, reason=None):
+        await member.move_to(channel=None)
+        mute = nextcord.utils.get(ctx.guild.roles, name="Muted")
+        await member.add_roles(mute)
+        await ctx.send(f"**{ctx.author.name}** выдал мут **{member.display_name} по причине: {reason}**")
+
+    @commands.command()
+    @commands.has_permissions(administrator=True)
+    async def unmute(self, ctx, member: nextcord.Member):
+        mute = nextcord.utils.get(ctx.guild.roles, name="Muted")
+        await member.remove_roles(mute)
+        await ctx.send(f"**{ctx.author.name}** размутил **{member.display_name}**")
+    
+    @commands.command()
+    @commands.has_permissions(ban_members=True)
+    async def ban(self, ctx, member: nextcord.Member):
+        if ctx.author.id != member.id:
+            await member.ban(reason="не указана")
+        else:
+            await ctx.send("У вас нет прав для бана данного человека!", delete_after=4)
+
+    @commands.command()
+    @commands.has_permissions(ban_members=True)
+    async def unban(self, ctx, id):
+        user = await self.bot.fetch_user(id)
+        try:
+            await ctx.guild.unban(user)
+        except:
+            await ctx.send("Пользователь не забанен", delete_after=4)
+
+
+def setup(bot):
+    bot.add_cog(muteandban(bot))

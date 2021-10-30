@@ -1,41 +1,42 @@
 import nextcord
 from nextcord.ext import commands
 import datetime
-import time
 
 now = datetime.datetime.now()
 mhour = now.hour + 3
 msctime = now.strftime(f"%d-%m-%Y {mhour}:%M")
 
+
 class Logs(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+
     
     @commands.Cog.listener()
     async def on_member_join(self, member):
         msg = f"{member.name} зашёл на сервер."
-        await self.bot.get_channel(901001501202317322).send(msg)
+        await self.bot.get_channel(channelid).send(msg)
 
 
     @commands.Cog.listener()
     async def on_member_remove(self, member):
         msg = f"{member.name} вышел с сервера."
-        await self.bot.get_channel(901001501202317322).send(msg)
+        await self.bot.get_channel(channelid).send(msg)
 
     
     @commands.Cog.listener()
-    async def on_message_edit(self, before, after):
+    async def on_message_edit(self, before, after, member: nextcord.Member):
         msg = f"{msctime}\n" \
             f"Сообщение до изменений {before.content}\n" \
             f"Сообщение после изменений {after.content}"
-        await self.bot.get_channel(901001501202317322).send(msg)
+        await self.bot.get_channel(channelid).send(msg)
 
 
     @commands.Cog.listener()
-    async def on_message_delete(self, message):
+    async def on_message_delete(self, message, member: nextcord.Member):
         msg = f"{msctime}\n" \
             f"Удалённое сообщение: {message.content}\n"
-        await self.bot.get_channel(901001501202317322).send(msg)
+        await self.bot.get_channel(channelid).send(msg)
 
 
     @commands.Cog.listener()
@@ -49,7 +50,7 @@ class Logs(commands.Cog):
         elif before.channel != after.channel:
             msg = f"{msctime}\n" \
                 f"{member.display_name} перешел из канала {before. channel.mention} в канал {after.channel.mention}"
-        await self.bot.get_channel (901001501202317322).send(msg)
+        await self.bot.get_channel (channelid).send(msg)
 
     
 def setup(bot):

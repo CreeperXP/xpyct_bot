@@ -1,6 +1,5 @@
 from webserver import keep_alive
 import os
-
 try:
     import nextcord
 except ImportError:
@@ -21,7 +20,7 @@ bot = commands.Bot(command_prefix=PREFIX, description="Hi")
 bot.remove_command("help")
 
 
-version = "Bot v2.2"
+version = "Bot v2.3"
 
 
 @bot.event
@@ -35,7 +34,7 @@ async def on_ready():
 @bot.command()
 async def help(ctx):
     await ctx.send(
-        f"**My commands**: {PREFIX}help | {PREFIX}ping | {PREFIX}clear | {PREFIX}hello | {PREFIX}github | {PREFIX}ver | {PREFIX}say | {PREFIX}serverinfo | {PREFIX}clean | {PREFIX}send_m | **Games**: $guess, $headortails | **Music**: $play, $join, $leave"
+        f"**My commands**: {PREFIX}help | {PREFIX}ping | {PREFIX}link | {PREFIX}mute |{PREFIX}ban | {PREFIX}nitro |{PREFIX}clear | {PREFIX}hello | {PREFIX}github | {PREFIX}ver | {PREFIX}say | {PREFIX}serverinfo | {PREFIX}clean | {PREFIX}send_m | **Games**: $guess, $headortails | **Music**: $play, $search, $join, $leave"
     )
     print(f"[Logs:utils] Информация о командах бота была выведена | {PREFIX}help")
 
@@ -98,6 +97,9 @@ async def hello(ctx):
     await ctx.send(f"Привет, {author.mention}!")
     print(f"[Logs:utils] Приветствие было выведено | {PREFIX}hello")
 
+@bot.command()
+async def link(ctx):
+  await ctx.send("Ссылка на добавления бота на свой сервер: https://discord.com/api/oauth2/authorize?client_id=833720975069282344&permissions=0&scope=applications.commands%20bot")
 
 @bot.command()
 async def ver(ctx):
@@ -201,7 +203,7 @@ async def send_m(ctx, member: nextcord.Member, *, text):
     author = ctx.message.author
     user_name = author.name
     develop = ["CreeperXP", "Dmitry Medvedev"]
-    if user_name == develop:
+    if user_name in develop:
         await member.send(
             f"От {ctx.author.name}:", embed=nextcord.Embed(description=text)
         )
@@ -211,11 +213,6 @@ async def send_m(ctx, member: nextcord.Member, *, text):
     else:
         await ctx.send("Ты не разработчик бота!")
         await ctx.message.delete()
-
-
-@bot.command()
-async def mute(ctx):
-    await ctx.send(file=nextcord.File("leopold-vd.mp4"))
 
 
 class Google(nextcord.ui.View):
@@ -257,6 +254,12 @@ async def ethspeed(ctx):
     await ctx.send(ethernet_speed)
 
 
+@bot.command(aliases=["нитро", "nitro"])
+async def freenitro(ctx):
+ embed=nextcord.Embed(description=f"Click on the link and get a free nitro!\nhttps://clck.ru/9TFat")
+ await ctx.reply(embed=embed)
+
+  
 # COGS
 
 
