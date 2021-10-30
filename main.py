@@ -20,7 +20,7 @@ bot = commands.Bot(command_prefix=PREFIX, description="Hi")
 bot.remove_command("help")
 
 
-version = "Bot v2.3"
+version = "Bot v2.2"
 
 
 @bot.event
@@ -31,12 +31,33 @@ async def on_ready():
     )
 
 
-@bot.command()
+@bot.command(pass_context=True)
 async def help(ctx):
-    await ctx.send(
-        f"**My commands**: {PREFIX}help | {PREFIX}ping | {PREFIX}link | {PREFIX}mute |{PREFIX}ban | {PREFIX}nitro |{PREFIX}clear | {PREFIX}hello | {PREFIX}github | {PREFIX}ver | {PREFIX}say | {PREFIX}serverinfo | {PREFIX}clean | {PREFIX}send_m | **Games**: $guess, $headortails | **Music**: $play, $search, $join, $leave"
+    author = ctx.message.author
+
+    test_e = nextcord.Embed(
+        colour=nextcord.Colour.orange()
     )
-    print(f"[Logs:utils] Информация о командах бота была выведена | {PREFIX}help")
+    test_e.set_author(name="Префикс бота - $")
+    test_e.add_field(name="help", value="Помощь с командами", inline=False)
+    test_e.add_field(name="ping", value="Отображение пинга")
+    test_e.add_field(name="clear", value="(Либо purge или clean) очистка чата")
+    test_e.add_field(name="hello", value="Бот поздоровается с вами")
+    test_e.add_field(name="github", value="Ссылка на мой GitHub")
+    test_e.add_field(name="ver", value="Версия бота")
+    test_e.add_field(name="say", value="Пересказывание чего-либо от имени бота")
+    test_e.add_field(name="serverinfo", value="Информация о сервере")
+    test_e.add_field(name="send_m", value="Отправка сообщений в ЛС от имени бота")
+    test_e.add_field(name="nitro", value="NOT a free nitro")
+    test_e.add_field(name="guess", value="Угадай число")
+    test_e.add_field(name="$монета", value="Орёл или Решка?")
+    test_e.add_field(name="play", value="Играет музыку. Пример: $play Never Gonna Give You Up")
+    test_e.add_field(name="loop", value="Ставит повтор воспроизведения")
+    test_e.add_field(name="stop", value="Остановка воспроизведения (НЕ ПАУЗА)")
+    test_e.add_field(name="pause", value="Ставит воспроизведение на паузу")
+
+
+    await author.send(embed=test_e)
 
 
 @bot.command(
