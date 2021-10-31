@@ -14,6 +14,7 @@ import asyncio
 from urllib.parse import quote_plus
 import youtube_dl
 from speedtest import Speedtest
+from dotenv import load_dotenv
 
 
 def get_prefix(bot, message):
@@ -342,5 +343,7 @@ for filename in os.listdir("./cogs"):
     if filename.endswith(".py"):
         bot.load_extension(f"cogs.{filename[:-3]}")
 
+
+load_dotenv()
 keep_alive()
 bot.run(os.getenv("DISCORD_TOKEN"))
