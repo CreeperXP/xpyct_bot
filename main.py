@@ -15,12 +15,47 @@ from urllib.parse import quote_plus
 import youtube_dl
 from speedtest import Speedtest
 
+
+def get_prefix(bot, message):
+    with open("prefix.json", "r") as f:
+        prefix = json.load(f)
+    return prefix[str(message.guild.id)]
+
+
 PREFIX = "$"
-bot = commands.Bot(command_prefix=PREFIX, description="Hi")
+intents = nextcord.Intents().all()
+bot = commands.Bot(command_prefix=get_prefix, intents=intents)
+
+@bot.event
+async def on_guild_join(guild):
+    with open("prefix.json", "r") as f:
+        prefix = json.load(f)
+    prefix[str(guild.id)] = "$"
+    with open("prefix.json", "w") as f:
+        json.dump(prefix, f, indent=4)
+
+@bot.event
+async def on_guild_remove(guild):
+    with open("prefix.json", "r") as f:
+        prefix = json.load(f)
+    prefix.pop(str(guild.id))
+    with open("prefix.json", "w") as f:
+        json.dump(prefix, f, indent=4)
+
+@bot.command()
+@commands.has_permissions(administrator=True)
+async def setprefix(ctx, new: str):
+    with open("prefix.json", "r") as f:
+        prefix = json.load(f)
+    prefix[str(ctx.guild.id)] = new
+    with open("prefix.json", "w") as f:
+        json.dump(prefix, f, indent=4)
+    await ctx.send(f"Новый префикс `{new}`")
+
 bot.remove_command("help")
 
 
-version = "Bot v2.2"
+version = "Bot v2.3"
 
 
 @bot.event
@@ -38,7 +73,7 @@ async def help(ctx):
     test_e = nextcord.Embed(
         colour=nextcord.Colour.orange()
     )
-    test_e.set_author(name="Префикс бота - $")
+    test_e.set_author(name=f"Мои команды:")
     test_e.add_field(name="help", value="Помощь с командами", inline=False)
     test_e.add_field(name="ping", value="Отображение пинга")
     test_e.add_field(name="clear", value="(Либо purge или clean) очистка чата")
@@ -280,7 +315,7 @@ async def freenitro(ctx):
  embed=nextcord.Embed(description=f"Click on the link and get a free nitro!\nhttps://clck.ru/9TFat")
  await ctx.reply(embed=embed)
 
-  
+
 # COGS
 
 
