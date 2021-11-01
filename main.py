@@ -64,7 +64,7 @@ async def setprefix(ctx, new: str):
 bot.remove_command("help")
 
 
-version = "Bot v2.3"
+version = "Bot v2.4"
 
 
 @bot.event
