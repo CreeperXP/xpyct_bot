@@ -12,9 +12,8 @@ import requests
 import random
 import asyncio
 from urllib.parse import quote_plus
-import youtube_dl
 from speedtest import Speedtest
-from dotenv import load_dotenv
+import string
 
 
 def get_prefix(bot, message):
@@ -25,7 +24,7 @@ def get_prefix(bot, message):
 
 PREFIX = "$"
 intents = nextcord.Intents().all()
-bot = commands.Bot(command_prefix=get_prefix, intents=intents)
+bot = commands.Bot(command_prefix=get_prefix, intents=intents) 
 
 @bot.event
 async def on_guild_join(guild):
@@ -42,6 +41,15 @@ async def on_guild_remove(guild):
     prefix.pop(str(guild.id))
     with open("prefix.json", "w") as f:
         json.dump(prefix, f, indent=4)
+
+@bot.event
+async def on_message(message):
+    if {i.lower().translate(str.maketrans('','', string. punctuation)) for i in message.content.split(' ')}\
+    .intersection(set(json.load(open('cenz.json')))) != set():
+        await message.channel.send(f'{message.author.mention}, yyy… кого по губам отшлепать??')
+        await message.delete()
+    
+    await bot.process_commands(message)
 
 @bot.command()
 @commands.has_permissions(administrator=True)
@@ -92,7 +100,7 @@ async def help(ctx):
     test_e.add_field(name="stop", value="Остановка воспроизведения (НЕ ПАУЗА)")
     test_e.add_field(name="pause", value="Ставит воспроизведение на паузу")
 
-
+    await ctx.reply("Я отправил список команд тебе в ЛС", delete_after=5.0)
     await author.send(embed=test_e)
 
 
@@ -165,17 +173,11 @@ async def ver(ctx):
 
 
 @bot.command()
+@commands.has_permissions(administrator=True)
 async def say(ctx, *, text):
     await ctx.message.delete()
-    author = ctx.message.author
-    username = author.name
-    develop = "CreeperXP"
-    if username == develop:
-        await ctx.message.delete()
-        await ctx.send(embed=nextcord.Embed(description=text))
-        print(f"[Logs:utils] Сообщение пересказано ботом | {PREFIX}say")
-    else:
-        await ctx.send("Ты не разработчик бота!")
+    await ctx.send(embed=nextcord.Embed(description=text))
+    print(f"[Logs:utils] Сообщение пересказано ботом | {PREFIX}say")
 
 
 @bot.command()
@@ -209,6 +211,7 @@ async def userinfo(ctx, user: nextcord.User):
 
 
 @bot.command(aliases=["clear", "purge"])
+@commands.has_permissions(administrator=True)
 async def clean(ctx, amount=None):
     await ctx.channel.purge(limit=int(amount) + 1)
     print(f"[Logs:utils] {amount} сообщений удалено | {PREFIX}clean")
@@ -255,21 +258,14 @@ async def github(ctx):
 
 
 @bot.command()
+@commands.has_permissions(administrator=True)
 async def send_m(ctx, member: nextcord.Member, *, text):
-    await ctx.message.delete()
-    author = ctx.message.author
-    user_name = author.name
-    develop = ["CreeperXP", "Dmitry Medvedev"]
-    if user_name in develop:
-        await member.send(
-            f"От {ctx.author.name}:", embed=nextcord.Embed(description=text)
-        )
-        print(
-            f"[Logs:utils] Сообщение от {ctx.author.name} было отправлено {member.name} | {PREFIX}send_m"
-        )
-    else:
-        await ctx.send("Ты не разработчик бота!")
-        await ctx.message.delete()
+    await member.send(
+         f"От {ctx.author.name}:", embed=nextcord.Embed(description=text)
+    )
+    print(
+        f"[Logs:utils] Сообщение от {ctx.author.name} было отправлено {member.name} | {PREFIX}send_m"
+    )
 
 
 class Google(nextcord.ui.View):
@@ -344,6 +340,5 @@ for filename in os.listdir("./cogs"):
         bot.load_extension(f"cogs.{filename[:-3]}")
 
 
-load_dotenv()
 keep_alive()
 bot.run(os.getenv("DISCORD_TOKEN"))
