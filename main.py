@@ -14,6 +14,8 @@ import asyncio
 from urllib.parse import quote_plus
 from speedtest import Speedtest
 import string
+import datetime
+from discord_together import DiscordTogether
 
 
 def get_prefix(bot, message):
@@ -25,6 +27,10 @@ def get_prefix(bot, message):
 PREFIX = "$"
 intents = nextcord.Intents().all()
 bot = commands.Bot(command_prefix=get_prefix, intents=intents) 
+bot.remove_command("help")
+
+version = "Bot v2.4"
+
 
 @bot.event
 async def on_guild_join(guild):
@@ -61,14 +67,10 @@ async def setprefix(ctx, new: str):
         json.dump(prefix, f, indent=4)
     await ctx.send(f"Новый префикс `{new}`")
 
-bot.remove_command("help")
-
-
-version = "Bot v2.4"
-
 
 @bot.event
 async def on_ready():
+    bot.togetherControl = await DiscordTogether("DISCORD_TOKEN")
     print(f"Bot logged as {bot.user} | {version}")
     await bot.change_presence(
         status=nextcord.Status.online, activity=nextcord.Game("$help")
@@ -94,7 +96,7 @@ async def help(ctx):
     test_e.add_field(name="send_m", value="Отправка сообщений в ЛС от имени бота")
     test_e.add_field(name="nitro", value="NOT a free nitro")
     test_e.add_field(name="guess", value="Угадай число")
-    test_e.add_field(name="$монета", value="Орёл или Решка?")
+    test_e.add_field(name="монета", value="Орёл или Решка?")
     test_e.add_field(name="play", value="Играет музыку. Пример: $play Never Gonna Give You Up")
     test_e.add_field(name="loop", value="Ставит повтор воспроизведения")
     test_e.add_field(name="stop", value="Остановка воспроизведения (НЕ ПАУЗА)")
@@ -175,7 +177,7 @@ async def ver(ctx):
 @bot.command()
 @commands.has_permissions(administrator=True)
 async def say(ctx, *, text):
-    await ctx.message.delete()
+    await ctx.message.delete
     await ctx.send(embed=nextcord.Embed(description=text))
     print(f"[Logs:utils] Сообщение пересказано ботом | {PREFIX}say")
 
@@ -199,15 +201,6 @@ async def serverinfo(ctx):
     serverinfoEmbed.add_field(name="ID сервера", value=f"{ctx.guild.id}", inline=False)
 
     await ctx.send(embed=serverinfoEmbed)
-
-
-@bot.command()
-async def userinfo(ctx, user: nextcord.User):
-    user_id = user.id
-    username = user.name
-    avatar = user.avatar.url
-    await ctx.send(f"ID: {user_id} | NICK: {username}\n{avatar}")
-    print(f"[Logs:utils] Информация о {username} была выведена | {PREFIX}userinfo")
 
 
 @bot.command(aliases=["clear", "purge"])
@@ -311,6 +304,12 @@ async def ethspeed(ctx):
 async def freenitro(ctx):
  embed=nextcord.Embed(description=f"Click on the link and get a free nitro!\nhttps://clck.ru/9TFat")
  await ctx.reply(embed=embed)
+
+
+@bot.command(aliases=["youtube", "ютуб"])
+async def yt(ctx):
+    link = await bot.togetherControl.create_link(ctx.author.voice.channel.id, 'youtube')
+    await ctx.send(f"{link}")
 
 
 # COGS
