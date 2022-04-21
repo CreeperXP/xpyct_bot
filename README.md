@@ -1,5 +1,7 @@
 ## XpyctBot 
 
+![image](https://user-images.githubusercontent.com/67541714/164468688-10b1b574-55fd-4cab-8e36-b7a734b710a3.png)
+
 Это хрустик. Он раб твоего сервера
 
 Есть много команд и даже музыку играть может
