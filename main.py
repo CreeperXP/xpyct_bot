@@ -4,17 +4,14 @@ try:
     import nextcord
 except ImportError:
     print("Trying to Install required module: nextcord[voice]\n")
-    os.system("python -m pip install nextcord[voice]")
+    os.system("python -m pip install --upgrade nextcord[voice]")
 import nextcord
 from nextcord.ext import commands
 import json
-import requests
-import random
 import asyncio
 from urllib.parse import quote_plus
 from speedtest import Speedtest
 import string
-import datetime
 from discord_together import DiscordTogether
 
 
@@ -310,6 +307,12 @@ async def freenitro(ctx):
 async def yt(ctx):
     link = await bot.togetherControl.create_link(ctx.author.voice.channel.id, 'youtube')
     await ctx.send(f"{link}")
+
+@bot.command()
+async def timer(ctx, time: int): #таймер
+    await ctx.send(f"Таймер запущен на {time} секунд")
+    await asyncio.sleep(time)
+    await ctx.send(f"Таймер завершен")
 
 
 # COGS
