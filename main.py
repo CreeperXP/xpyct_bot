@@ -1,4 +1,4 @@
-from webserver import keep_alive
+#from webserver import keep_alive
 import os
 try:
     import nextcord
@@ -342,5 +342,5 @@ for filename in os.listdir("./cogs"):
         bot.load_extension(f"cogs.{filename[:-3]}")
 
 
-keep_alive()
+#keep_alive()
 bot.run(os.getenv("DISCORD_TOKEN"))
