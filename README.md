@@ -1,6 +1,6 @@
 ## XpyctBot
 
-### Now on Gitea: https://git.disroot.org/creeperxp/xpyct_bot
+### Now on ![Codeberg](https://codeberg.org/CreeperXP/xpyct_bot) and ![Gitea](https://git.disroot.org/creeperxp/xpyct_bot)
 
 ![image](https://user-images.githubusercontent.com/67541714/164468688-10b1b574-55fd-4cab-8e36-b7a734b710a3.png)
 
